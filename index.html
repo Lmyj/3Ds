@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+
+    </style>
+    <script src="../3d/jQuerys.js"></script>
+    <script>
+        $(function(){
+            var bigSence = $('<div>');
+            bigSence.css({
+                width:'800px',
+                height:'400px',
+                border:'1px solid red',
+                margin:'30px auto'
+            });
+            $(bigSence).appendTo('body');
+            var num = 4;
+            var arr = [];
+            var pre = $(bigSence).height();
+            var mianH = pre/num;
+
+            for(var i=0;i<num;i++){
+                var sence = $('<div>');
+                pre = pre-mianH;
+                sence.css({
+                    width:'100%',height:''+mianH+'px',
+                    position:'relative',
+                    perspective:'5000px',
+                    perspectiveOrigin:'center '+pre+'px'
+                });
+                $(sence).appendTo(bigSence);
+                var box = $('<div>');
+                arr.push(box);
+                box.css({
+                    width:'100%',height:'100%',
+                    position:'relative',
+                    transition:'transform 3s ease '+i*0.06+'s',
+                    transformOrigin:'center center 200px',
+                    transformStyle:'preserve-3d'
+                });
+                $(box).appendTo(sence);
+                for(var k=0;k<6;k++){
+                    var mian = $('<div>');
+                    mian.css({
+                        position:'absolute',top:0,left:0
+                    });
+                    if(k==0){
+                        mian.css({
+                            width:'100%',height:'400px',
+                            transform:'rotateX(90deg)',
+                            transformOrigin:'top'
+                        });
+                    }else if(k==1){
+                        mian.css({
+                            width:'100%',height:'100%',
+                            transform:'translateZ(400px)',
+                            background:'url(./img/1.jpg) no-repeat 0 '+i*-mianH+'px'
+                        });
+                    }else if(k == 2){
+                        mian.css({
+                            width:'100%',height:'400px',
+                            top:'-300px',
+                            transform:'rotateX(-90deg)',
+                            transformOrigin:'bottom'
+                        });
+                    }else if(k == 3){
+                        mian.css({
+                            width:'100%',height:'100%',
+                            transform:'rotateY(180deg)',
+                            background:'url(./img/2.jpeg) no-repeat 0 '+i*-mianH+'px'
+                        });
+                    }else if(k == 4){
+                        mian.css({
+                            width:'400px',height:'100%',
+                            transform:'rotateY(-90deg)',
+                            transformOrigin:'left',
+                            background:'url(./img/3.jpg) no-repeat 0 '+i*-mianH+'px'
+                        });
+                    }else if(k == 5){
+                        mian.css({
+                            width:'400px',height:'100%',
+                            left:'400px',
+                            transform:'rotateY(90deg)',
+                            transformOrigin:'right',
+                            background:'url(./img/4.jpg) no-repeat 0 '+i*-mianH+'px'
+                        });
+                    }
+                    $(mian).appendTo(box);
+                }
+            }
+            var a = 0;
+            function move(){
+                a += 90;
+                for (var i = 0; i < arr.length; i++) {
+                    $(arr[i]).css({
+                        transform: 'rotateY(' + a + 'deg)'
+                    });
+                }
+            }
+            var timerId = setInterval(move,6000);
+            window.onblur = function(){
+                clearInterval(timerId);
+            }
+            window.onfocus = function(){
+                timerId = setInterval(move,6000);
+            }
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>
